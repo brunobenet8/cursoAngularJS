@@ -1,0 +1,37 @@
+<html ng-app="caixa">
+<meta charset="UTF-8">
+<script src="angular/angular.js"></script>
+<script>
+angular.module("caixa", []);
+angular.module("caixa").controller("caixactrl", function($scope){
+  $scope.saldo= 0;
+  $scope.mov=[];
+  $scope.adicionar = function(moves){
+    $scope.mov.push(angular.copy(moves));
+    $scope.saldo += parseFloat($scope.moves.valor);
+    delete $scope.moves;
+  };
+
+});
+</script>
+<body ng-controller="caixactrl">
+<div >Saldo: {{saldo}}</div>
+<form>
+<label>Descrição:</label><input type="text" ng-model="moves.descricao">
+<label>Valor:</valor><input type="text" ng-model="moves.valor">
+<button ng-click="adicionar (moves)">Salvar</button>
+</form>
+<div>
+<table>
+<tr>
+<th>Descrição</th>
+<th>Valor</th>
+</tr>
+<tr ng-repeat="moves in mov">
+<td>{{moves.descricao | uppercase}}</td>
+<td>{{moves.valor | currency}}</td>
+</tr>
+</table>
+<div>
+<body>
+</html>
