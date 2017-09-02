@@ -1,0 +1,68 @@
+<html ng-app="caixa">
+<meta charset="UTF-8">
+<script src="jquery-3.2.1.min.js"></script>
+<script src="popper.js"></script>
+<script src="bootstrap.js"></script>
+<script src="bootstrap.min.js"></script>
+<script src="angular.js"></script>
+<link rel="stylesheet" href="bootstrap.css">
+<link rel="stylesheet" href="bootstrap.min.css">
+<script>
+angular.module("caixa", []);
+angular.module("caixa").controller("caixactrl", function($scope){
+  $scope.saldo= 0;
+  $scope.mov=[];
+  $scope.adicionar = function(moves){
+    $scope.mov.push(angular.copy(moves));
+    $scope.saldo += parseFloat($scope.moves.valor);
+    delete $scope.moves;
+  };
+});
+</script>
+<body ng-controller="caixactrl">
+<div class="jumbotron">Saldo: {{saldo | currency}}</div>
+
+<div class="modal fade" id="basicModal" tabindex="-1" role="dialog" aria-labelledby="basicModal" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+            <h4 class="modal-title" id="myModalLabel">Novo Lançamento</h4>
+          </div>
+          <div class="modal-body">
+            <form class="form-group">
+            <label >Descricao:</label><input type="text" ng-model="moves.descricao">
+            <label >Valor:</valor><input type="text" ng-model="moves.valor">              
+            </form>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-default" data-dismiss="modal">Fechar</button>
+            <button type="button" class="btn btn-primary" ng-click="adicionar (moves)" data-dismiss="modal">Salvar</button>
+          </div>
+        </div>
+      </div>
+    </div>
+<a href="#" class="btn btn-lg btn-success" data-toggle="modal" data-target="#basicModal">Novo Lançamento</a><p></p>
+<script>
+$("#btn-mensagem").click(function(){    
+$("#modal-mensagem").modal;
+	
+});
+</script>
+<div>
+<table class="table">
+<tr>
+<th>Descricao</th>
+<th>Valor</th>
+</tr>
+<tr ng-repeat="moves in mov">
+<td>{{moves.descricao | uppercase}}</td>
+<td>{{moves.valor | currency}}</td>
+</tr>
+</table>
+<div>
+<body>
+ <script src="jquery-3.2.1.min.js"></script>
+    <script src="bootstrap.min.js"></script>
+<link href="bootstrap.min.css" rel="stylesheet">
+</html>
