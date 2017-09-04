@@ -19,6 +19,14 @@ angular.module("caixa").controller("caixactrl", function($scope){
   };
 });
 </script>
+<style>
+    .maior{
+      color: blue;
+    }
+    .menor{
+      color: red;
+    }
+    </style> 
 <body ng-controller="caixactrl">
 <div class="jumbotron">Saldo: {{saldo | currency}}</div>
 
@@ -57,7 +65,7 @@ $("#modal-mensagem").modal;
 </tr>
 <tr ng-repeat="moves in mov">
 <td>{{moves.descricao | uppercase}}</td>
-<td>{{moves.valor | currency}}</td>
+<td ng-class="{'maior': moves.valor>0, 'menor': moves.valor<0}">{{moves.valor | currency}}</td>
 </tr>
 </table>
 <div>
