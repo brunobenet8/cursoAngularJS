@@ -1,4 +1,6 @@
+<!DOCTYPE html>
 <html ng-app="caixa">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta charset="UTF-8">
 <script src="jquery-3.2.1.min.js"></script>
 <script src="popper.js"></script>
@@ -10,25 +12,33 @@
 <script>
 angular.module("caixa", []);
 angular.module("caixa").controller("caixactrl", function($scope){
-  $scope.saldo= 0;
+  
   $scope.mov=[];
   $scope.adicionar = function(moves){
     $scope.mov.push(angular.copy(moves));
-    $scope.saldo += parseFloat($scope.moves.valor);
+    //$scope.saldo += parseFloat($scope.moves.valor);    
     delete $scope.moves;
   };
+  $scope.$watchCollection('mov',function() {  
+  $scope.saldo = 0;  
+  angular.forEach($scope.mov, function(value, key) {
+    $scope.saldo += parseFloat(value.valor);
+  })
+});
 });
 </script>
 <style>
-    .maior{
-      color: blue;
-    }
-    .menor{
-      color: red;
-    }
-    </style> 
+  .maior{
+    color: blue;
+  }
+  .menor{
+    color: red;
+  }
+  </style> 
 <body ng-controller="caixactrl">
-<div class="jumbotron">Saldo: {{saldo | currency}}</div>
+<div class="navbar navbar-toggleable-md navbar-inverse fixed-top bg-inverse">
+  <a class="navbar-brand" style="color:white; font-style: bold;">Saldo: {{saldo | currency}}</a>
+</div></br>
 
 <div class="modal fade" id="basicModal" tabindex="-1" role="dialog" aria-labelledby="basicModal" aria-hidden="true">
       <div class="modal-dialog">
@@ -50,7 +60,12 @@ angular.module("caixa").controller("caixactrl", function($scope){
         </div>
       </div>
     </div>
-<a href="#" class="btn btn-lg btn-success" data-toggle="modal" data-target="#basicModal">Novo Lançamento</a><p></p>
+    
+<a href="#" style="margin-top: 60px; margin-left: 5px;" class="btn btn-success" data-toggle="modal" data-target="#basicModal">Novo Lançamento</a>
+
+<p></p>
+
+
 <script>
 $("#btn-mensagem").click(function(){    
 $("#modal-mensagem").modal;
@@ -58,16 +73,19 @@ $("#modal-mensagem").modal;
 });
 </script>
 <div>
-<table class="table">
+<table class="table table-bordered table-houver" style="width:70%; margin-left:auto; margin-right:auto;">
 <tr>
+ 
 <th>Descricao</th>
 <th>Valor</th>
 </tr>
-<tr ng-repeat="moves in mov">
+<tr ng-repeat="moves in mov"> 
 <td>{{moves.descricao | uppercase}}</td>
 <td ng-class="{'maior': moves.valor>0, 'menor': moves.valor<0}">{{moves.valor | currency}}</td>
+<td><button ng-click="mov.splice($index, 1); somar()" class="btn btn-sm btn-danger">Apagar</button></td>     
 </tr>
 </table>
+
 <div>
 <body>
  <script src="jquery-3.2.1.min.js"></script>
