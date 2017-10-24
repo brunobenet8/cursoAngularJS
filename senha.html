@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html ng-app="app">
+<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.6/angular.min.js"></script>
+<script>
+    angular.module("app", []);
+    angular.module("app").controller("ctrl", function($scope){
+        $scope.senha;
+        $scope.confirma;
+        $scope.validacao = false;
+        $scope.mostra = function(){
+            if($scope.senha == $scope.confirma){                
+                $scope.validacao = true;
+            }else{
+                $scope.validacao = false;
+            }
+        }
+    });
+</script>
+<body ng-controller="ctrl">
+    <form name="formA">
+    <input type="text" ng-model="senha" ng-required="true">
+    <input type="text" ng-model="confirma" ng-required="true" ng-change="mostra()">    
+    {{senha}}{{confirma}}
+    {{validacao}}
+    <button ng-disabled="!validacao || !formA.$valid" ng-click="mostra()">Salvar</button>
+    <button ng-click="mostra()" >Verifica</button>
+</form>
+</body>
+
+</html>
